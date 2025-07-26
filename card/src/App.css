@@ -1,0 +1,43 @@
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 16px;
+}
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.card {
+  border: 2px solid black;
+  padding: 0.5rem;
+  background-color: bisque;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 300px;
+  width: 90%;
+  transition: all 0.3s ease;
+}
+.card:hover {
+  background-color: beige;
+}
+
+.img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 15px;
+  }
+  .card h2 {
+    font-size: 1.25rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+  }
+}
