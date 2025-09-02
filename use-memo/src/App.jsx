@@ -1,40 +1,75 @@
-import { useMemo } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react"
 
-const App = () => {
-  const [increment, setIncrement] = useState(0);
-  const [decrement, setDecrement] = useState(100);
-
-  const handleIncrement = () => {
-    setIncrement((prev) => prev + 1);
-  };
-
-  const handleDecrement = () => {
-    setDecrement((prev) => prev - 1);
-  };
-
-  // const multiply = () => {
-  //   console.log("multiply called");
-  //   return increment + 10;
-  // };
-
-  const multiply = useMemo(() => {
-    console.log("multiply called");
-    return increment + 10;
-  }, [increment]);
+const App=()=>{
+  const [increment,setIncrement]=useState(0);
+  const [decrement,setDecrement]=useState(100)
+  const handleIncrement=()=>{
+    setIncrement((prev)=>prev+1)
+  }
+  const handleDecrement=()=>{
+    setDecrement((prev)=>prev-1)
+  }
+  // const multiply=()=>{
+  //   console.log(multiply)
+  //   return increment*10;
+  // }
+  const multiply=useMemo(()=>{
+    console.log(increment)
+    return increment+10
+  },[increment])
+  
   return (
+    <>
+    <p>{multiply}</p>
+    <p>{increment}</p>
+    <button onClick={handleIncrement}>Increment</button>
     <div>
-      <p>{multiply}</p>
-      <p>{increment}</p>
-      <button onClick={handleIncrement}>Increment</button>
-      <br />
       <p>{decrement}</p>
       <button onClick={handleDecrement}>Decrement</button>
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App
+
+// import { useMemo } from "react";
+// import { useState } from "react";
+
+// const App = () => {
+//   const [increment, setIncrement] = useState(0);
+//   const [decrement, setDecrement] = useState(100);
+
+//   const handleIncrement = () => {
+//     setIncrement((prev) => prev + 1);
+//   };
+
+//   const handleDecrement = () => {
+//     setDecrement((prev) => prev - 1);
+//   };
+
+//   // const multiply = () => {
+//   //   console.log("multiply called");
+//   //   return increment + 10;
+//   // };
+
+//   const multiply = useMemo(() => {
+//     console.log("multiply called");
+//     return increment + 10;
+//   }, [increment]);
+//   return (
+//     <div>
+//       <p>{multiply}</p>
+//       <p>{increment}</p>
+//       <button onClick={handleIncrement}>Increment</button>
+//       <br />
+//       <p>{decrement}</p>
+//       <button onClick={handleDecrement}>Decrement</button>
+//     </div>
+//   );
+// };
+
+// export default App;
 
 // import { useEffect, useMemo } from "react";
 // import { useState } from "react";
