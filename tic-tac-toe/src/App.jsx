@@ -62,7 +62,7 @@ function App() {
         </div>
 
       </div>
-      <div className='reset-btn'>
+      <div>
         <button className='reset-btn' onClick={handleReset}>Reset</button>
         {winner && <div>{winner} is winner od this game</div>}
       </div>
