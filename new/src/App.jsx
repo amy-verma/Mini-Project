@@ -4,6 +4,7 @@ import './App.css'
 const App=()=>{
 
   const [users,setUsers]=useState([])
+  const [search,setSearch]=useState("")
 
   const FetchData=async()=>{
     try{
@@ -19,10 +20,18 @@ const App=()=>{
   useEffect(()=>{
     FetchData()
   },[])
+  const handleInputChnage=(e)=>{
+    setSearch(e.target.value)
+  }
+
+  const filteredData=users.filter((ele)=>{
+    return ele.name.toLowerCase().includes(search.toLocaleLowerCase())
+  })
 
   return (<>
+  <div><input type='text' placeholder='Search Here' value={search}  onChange={handleInputChnage}/></div>
   <div><ul>
-    {users.map((ele)=>{
+    {filteredData.map((ele)=>{
     return <li key={ele.id}>{ele.name}</li>
   })}</ul></div>
   </>)
