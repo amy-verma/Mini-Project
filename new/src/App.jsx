@@ -15,6 +15,9 @@ const App=()=>{
     setInput(e.target.value)
   }
 
+  const handleDelete=(index)=>{
+    setTask((prevTask)=>prevTask.filter((ele,id)=>id!==index))
+  }
   return (
   <>
   <h2>To Do App</h2>
@@ -22,7 +25,7 @@ const App=()=>{
   <button onClick={handleAddButton}>Add</button>
   <div>{
     task.map((task,index)=>{
-      return <li key={index}>{task}</li>
+      return <li key={index}>{task} <button onClick={()=>handleDelete(index)}>Delete</button></li>
     })
     }</div>
   </>
