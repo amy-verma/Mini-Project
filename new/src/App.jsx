@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import './App.css'
+import React,{useState} from "react";
 
-const App=()=>{
-  const [input,setInput]=useState("")
-  const [task,setTask]=useState([])
-  
-  const handleAddButton=()=>{
-    if(input.trim()==="") return
-    setTask((prevTask)=>[...prevTask,input])
-   setInput("")
+function App() {
+const [count,setCount]=useState(0)
+     
+  const handleIncrement=()=>{
+        setCount((prev)=>prev+1)
   }
-
-  const handleOnChange=(e)=>{
-    setInput(e.target.value)
+     const handleDecrement=()=>{
+        setCount((prev)=>prev-1)
   }
-
-  const handleDelete=(index)=>{
-    setTask((prevTask)=>prevTask.filter((ele,id)=>id!==index))
+  const handleResetButton=()=>{
+    setCount(0)
   }
+ 
   return (
-  <>
-  <h2>To Do App</h2>
-  <input type='text' placeholder='Enter to do' value={input} onChange={handleOnChange}/>
-  <button onClick={handleAddButton}>Add</button>
-  <div>{
-    task.map((task,index)=>{
-      return <li key={index}>{task} <button onClick={()=>handleDelete(index)}>Delete</button></li>
-    })
-    }</div>
-  </>
+   <>
+     <div>
+       <p>{count}</p>
+    <button onClick={handleIncrement}>Increment</button> 
+     </div>
+     <div>
+         <p>{count}</p>
+       <button onClick={handleDecrement}>Decrement</button>
+     </div>
+     <div>
+      <button onClick={handleResetButton}>Reset</button>
+     </div>
+     
+   </>
   )
 }
 
-export default App
+export default App;
