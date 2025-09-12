@@ -1,36 +1,39 @@
 import { useState } from "react";
 
 
-const INITIAL_VAlue=15;
-
 function App() {
-  const [count,setCount]=useState(INITIAL_VAlue)
+  const [search,setSearch]=useState("");
+  const [list,setList]=useState([])
 
-  const handleIncrement=()=>{
-    setCount((prevCount)=>Math.min(prevCount+1,25))
+  const handleSearch=(e)=>{
+    setSearch(e.target.value)
   }
-  const handleDecrement=()=>{
-    setCount((prevCount)=>Math.max(prevCount-1,10))
+  const handleAdd=()=>{
+    if(search.trim()===""){
+      return
+    }
+    setList((prev)=>[...prev,search])
+    console.log(list)
+    setSearch("")
   }
-  const handleReset=()=>{
-    setCount(0)
+  const handleRemove=(index)=>{
+    setList((prevList)=>prevList.filter((ele,id)=>id!=index))
   }
-
-  let bgColor=count > 15 ? "red" :"blue"
- 
-  return (
-   <>
-   <div style={{backgroundColor:bgColor}}>
-    <p>{count}</p>
-   <button onClick={handleIncrement}>Increment</button>
-   <button onClick={handleDecrement}>Decrement</button>
-   </div>
-   <div>
-    <button onClick={handleReset}>Reset</button>
-   </div>
-   
-   </>
+  return(
+    <>
+    <h2>ToDo App</h2>
+    <input type="text" placeholder="Add To Do" value={search} onChange={handleSearch}/>
+    <button onClick={handleAdd}>Add</button>
+    <ul>{
+       list.map((ele,index)=>{
+        return <li key={index}>{ele} <button onClick={()=>handleRemove(index)}>Remove</button></li>
+      })
+      }
+     
+    </ul>
+    </>
   )
+ 
 }
 
 export default App;
