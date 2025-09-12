@@ -1,40 +1,34 @@
-import React,{useState} from "react";
+import { useState } from "react";
 
 
-const INITIAL_VALUE=15
+const INITIAL_VAlue=15;
 
 function App() {
-const [count,setCount]=useState(INITIAL_VALUE)
-     
+  const [count,setCount]=useState(INITIAL_VAlue)
+
   const handleIncrement=()=>{
-        setCount((prev)=>Math.min(prev+1,25) )
+    setCount((prevCount)=>Math.min(prevCount+1,25))
   }
-     const handleDecrement=()=>{
-        setCount((prev)=>Math.max(prev-1,10))
+  const handleDecrement=()=>{
+    setCount((prevCount)=>Math.max(prevCount-1,10))
   }
-  const handleResetButton=()=>{
+  const handleReset=()=>{
     setCount(0)
   }
 
-  let bgColor=count>15? "green" : "red"
+  let bgColor=count > 15 ? "red" :"blue"
  
   return (
    <>
    <div style={{backgroundColor:bgColor}}>
-     
-       <p>{count}</p>
-    <button onClick={handleIncrement}>Increment</button> 
-    
-     
-         <p>{count}</p>
-       <button onClick={handleDecrement}>Decrement</button>
-     </div>
+    <p>{count}</p>
+   <button onClick={handleIncrement}>Increment</button>
+   <button onClick={handleDecrement}>Decrement</button>
+   </div>
+   <div>
+    <button onClick={handleReset}>Reset</button>
+   </div>
    
-    
-     <div>
-      <button onClick={handleResetButton}>Reset</button>
-     </div>
-     
    </>
   )
 }
