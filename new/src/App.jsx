@@ -1,39 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function App() {
-  const [search,setSearch]=useState("");
+  const [users,setUsers]=useState([])
+  const [search,setSearch]=useState("")
   const [list,setList]=useState([])
+
+
+  const FetchData=async()=>{
+    try{
+      const data=await fetch("https://jsonplaceholder.typicode.com/users")
+      const response=await data.json();
+      console.log(response);
+      setUsers(response)
+    }catch(error){
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+    FetchData()
+  },[])
 
   const handleSearch=(e)=>{
     setSearch(e.target.value)
   }
-  const handleAdd=()=>{
-    if(search.trim()===""){
-      return
-    }
-    setList((prev)=>[...prev,search])
-    console.log(list)
-    setSearch("")
-  }
-  const handleRemove=(index)=>{
-    setList((prevList)=>prevList.filter((ele,id)=>id!=index))
-  }
-  return(
-    <>
-    <h2>ToDo App</h2>
-    <input type="text" placeholder="Add To Do" value={search} onChange={handleSearch}/>
-    <button onClick={handleAdd}>Add</button>
-    <ul>{
-       list.map((ele,index)=>{
-        return <li key={index}>{ele} <button onClick={()=>handleRemove(index)}>Remove</button></li>
-      })
+
+  const FilteredData=users.filter((ele,id)=>{
+    return ele.name.toLowerCase().includes(search.toLowerCase())
+  })
+ return (
+  <>
+  <div>
+    <input type="text" placeholder="Search Here" value={search} onChange={handleSearch}/>
+  </div>
+  <div>
+    <ul>
+      {
+        FilteredData.map((ele,id)=>{
+          return <li key={id}>{ele.name}</li>
+        })
       }
-     
     </ul>
-    </>
-  )
- 
+  </div>
+  </>
+ )
 }
 
 export default App;
