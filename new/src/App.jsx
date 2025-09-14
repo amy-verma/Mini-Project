@@ -2,39 +2,40 @@ import { useEffect, useState } from "react";
 
 
 const App=()=>{
-  const [users,setUsers]=useState([])
-  const [list,setList]=useState("")
+  const [inputValue,setInputValue]=useState("")
+  const [list,setList]=useState([])
 
-  const fetchData=async()=>{
-    const data=await fetch("https://jsonplaceholder.typicode.com/users")
-    const response=await data.json()
-    setUsers(response)
-    console.log(response)
+  const handleOnChangeInput=(e)=>{
+   
+    setInputValue(e.target.value)
   }
-  useEffect(()=>{
-    fetchData()
-  },[])
-
-  const handleList=(e)=>{
-    setList(e.target.value)
+  const handleAddButton=()=>{
+     if(inputValue.trim()==""){
+      return 
+    }
+    setList((prev)=>[...prev,inputValue])
+    setInputValue("")
   }
-
-const FilteredData=users.filter((ele)=>{
-  return ele.name.toLowerCase().includes(list.toLowerCase())
-})
-
-  return (
+  const handleRemove=(index)=>{
+    const update=list.filter((ele,id)=>id!=index)
+    setList(update)
+  }
+  return ( 
   <>
+  <h2>ToDo App</h2>
   <div>
-    <input type="text" placeholder="Search Here" value={list} onChange={handleList}/>
+    <input type="text" placeholder="Add" value={inputValue} onChange={handleOnChangeInput} />
+    <button onClick={handleAddButton}>Add</button>
   </div>
-<div>
-  <ul>{
-    FilteredData.map((ele,id)=>{
-      return <li key={id}>{ele.name}</li>
-    })
-    }</ul>
-</div>
+  <div>
+    <ul>
+      {
+        list.map((ele,index)=>{
+          return <li key={ele.index}>{ele} <button onClick={()=>handleRemove(index)}>Remove</button></li>
+        })
+      }
+    </ul>
+  </div>
   </>
   )
 }
