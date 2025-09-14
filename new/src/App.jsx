@@ -1,49 +1,41 @@
 import { useEffect, useState } from "react";
 
 
-function App() {
+const App=()=>{
   const [users,setUsers]=useState([])
-  const [search,setSearch]=useState("")
-  const [list,setList]=useState([])
+  const [list,setList]=useState("")
 
-
-  const FetchData=async()=>{
-    try{
-      const data=await fetch("https://jsonplaceholder.typicode.com/users")
-      const response=await data.json();
-      console.log(response);
-      setUsers(response)
-    }catch(error){
-      console.log(error);
-    }
+  const fetchData=async()=>{
+    const data=await fetch("https://jsonplaceholder.typicode.com/users")
+    const response=await data.json()
+    setUsers(response)
+    console.log(response)
   }
   useEffect(()=>{
-    FetchData()
+    fetchData()
   },[])
 
-  const handleSearch=(e)=>{
-    setSearch(e.target.value)
+  const handleList=(e)=>{
+    setList(e.target.value)
   }
 
-  const FilteredData=users.filter((ele,id)=>{
-    return ele.name.toLowerCase().includes(search.toLowerCase())
-  })
- return (
+const FilteredData=users.filter((ele)=>{
+  return ele.name.toLowerCase().includes(list.toLowerCase())
+})
+
+  return (
   <>
   <div>
-    <input type="text" placeholder="Search Here" value={search} onChange={handleSearch}/>
+    <input type="text" placeholder="Search Here" value={list} onChange={handleList}/>
   </div>
-  <div>
-    <ul>
-      {
-        FilteredData.map((ele,id)=>{
-          return <li key={id}>{ele.name}</li>
-        })
-      }
-    </ul>
-  </div>
+<div>
+  <ul>{
+    FilteredData.map((ele,id)=>{
+      return <li key={id}>{ele.name}</li>
+    })
+    }</ul>
+</div>
   </>
- )
+  )
 }
-
 export default App;
