@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const CounterTimer=()=>{
 
@@ -6,8 +6,11 @@ const CounterTimer=()=>{
     const [isActive,setActive]=useState(false);
     const [isPause,setPause]=useState(false)
 
+    const intervalRef=useRef()
+
     const handleInputTimer=(e)=>{
         setTime(parseInt(e.target.value *60))   
+        
     }
     const formatTime=()=>{
         const min=String(Math.floor(time/60)).padStart(2,"0")
@@ -20,9 +23,26 @@ const CounterTimer=()=>{
     }
     useEffect(()=>{
         if(isActive && !isPause && time>0){
-            intervalRef.current
+            intervalRef.current=setInterval(()=>{
+                setTime((prev)=>prev-1)
+            },1000)
+        }else if(time===0){
+            clearInterval(intervalRef.current);
+            setActive(false)
+            alert("TIME IS UP")
         }
-    },[])
+        return ()=>clearInterval(intervalRef.current)
+    },[isActive,isPause])
+
+    const handlePause=()=>{
+        setPause(!isPause)
+    }
+    const handleReset=()=>{
+        clearInterval(intervalRef.current)
+        setActive(false)
+        setPause(false)
+        setTime(0)
+    }
     return (
         <>
         <h1>Counter Timer</h1>
@@ -31,9 +51,9 @@ const CounterTimer=()=>{
             <div>{formatTime()}</div>
         </div>
         <div>
-            <button onClick={handleStart}>Start</button>
-            <button onClick={handlePause}>Pause</button>
-            <button>Reset</button>
+            <button onClick={handleStart} disabled={isActive && !isPause}>Start</button>
+            <button onClick={handlePause} disabled={!isActive}>{isPause ? "Resume" : "Pause"}</button>
+            <button onClick={handleReset}>Reset</button>
         </div>
         </>
     )
